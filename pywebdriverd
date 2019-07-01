@@ -1,15 +1,17 @@
 #!/usr/bin/env python
-
+import logging
 from pywebdriver import app, config, drivers
+
 
 def main():
     host = config.get('flask', 'host')
     port = config.getint('flask', 'port')
-    debug = config.getboolean('flask', 'debug') 
+    debug = config.getboolean('flask', 'debug')
     if config.getboolean('application', 'print_status_start'):
         if 'escpos' in drivers:
             drivers['escpos'].push_task('printstatus')
-    app.run(host=host, port=port, debug=debug)
+    logging.basicConfig(filename='job.log', level=logging.DEBUG)
+    app.run(host=host, port=port, debug=debug, threaded=True)
 
 # Run application
 if __name__ == '__main__':

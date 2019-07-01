@@ -25,6 +25,7 @@ import platform
 import pkg_resources
 import os
 
+from time import sleep
 from flask import render_template
 from flask_cors import cross_origin
 from flask.ext.babel import gettext as _
@@ -96,6 +97,26 @@ def system():
         'system.html',
         system_info=system_info,
         installed_python_packages=installed_python_packages)
+
+
+@app.route('/stream_log.html', methods=['GET'])
+@cross_origin()
+def stream_log():
+    print "BLABLABLA"
+    return render_template('stream_log.html')
+
+
+@app.route('/stream')
+def stream():
+    def generate():
+        with open('job.log', 'r', 1) as f:
+            # Only display new text
+            f.read()
+            while True:
+                yield f.read()
+                sleep(1)
+
+    return app.response_class(generate(), mimetype='text/plain')
 
 
 @app.route(

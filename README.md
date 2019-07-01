@@ -116,7 +116,7 @@ sudo pip install -r requirement.txt
 * set correct parameters in the config/config.ini file;
 * call this command:
 ```
-   python pywebdriver.py
+   python pywebdriverd
 ```
 * Call the url : http://localhost:8069 (by default, but depending of your config.ini file) in a browser to see devices state;
 
